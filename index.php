@@ -320,18 +320,44 @@
       <div class="container">
 
         <div class="section-title" data-aos="fade-up">
-          <h2>Features</h2>
-          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
+          <h2>Dunia Informasi</h2>
+          <p>Temukan informasi terpusat disini</p>
         </div>
+        <?php 
 
+          $curl = curl_init();
+          
+          curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://sistem.zelnara.com/api/kategori?label=zelnarainformasi',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+          ));
+          
+          $response = curl_exec($curl);
+          
+          curl_close($curl);
+          
+        ?>
         <div class="row" data-aos="fade-up" data-aos-delay="300">
-          <div class="col-lg-3 col-md-4">
-            <div class="icon-box">
-              <i class="ri-store-line" style="color: #ffbb2c;"></i>
-              <h3><a href="">Lorem Ipsum</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+          <?php 
+            foreach (json_decode($response) as $item) {
+              $detail   = explode('|',$item->keterangan_kategori);
+              ?>
+                <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+                  <div class="icon-box">
+                    <i class="bi bi-<?=$detail[0]?>" style="color: #<?=$detail[1]?>;"></i>
+                    <h3><a href="<?=$detail[2]?>"><?=$item->nama_kategori?></a></h3>
+                  </div>
+                </div>
+              <?php
+            }
+          ?>
+          <!-- <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
             <div class="icon-box">
               <i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
               <h3><a href="">Dolor Sitema</a></h3>
@@ -372,8 +398,8 @@
               <i class="ri-price-tag-2-line" style="color: #4233ff;"></i>
               <h3><a href="">Pira Neve</a></h3>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
+          </div> -->
+          <!-- <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
               <i class="ri-anchor-line" style="color: #b2904f;"></i>
               <h3><a href="">Dirada Pack</a></h3>
@@ -396,7 +422,7 @@
               <i class="ri-fingerprint-line" style="color: #29cc61;"></i>
               <h3><a href="">Flavor Nivelanda</a></h3>
             </div>
-          </div>
+          </div> -->
         </div>
 
       </div>
